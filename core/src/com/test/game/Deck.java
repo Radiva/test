@@ -10,14 +10,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Deck {
 
-    private Kartu[] dek;
+    private Kartu[] dek = new Kartu[76];
     private int KartuKeluar;
 
     public Deck() {
         int CKartu = 0;
         for(int w = 0; w<4; w++) {
             for(int a=1; a<20; a++) {
-                dek[CKartu] = new Kartu(a%10,w,new Sprite(new TextureRegion(new Texture(Gdx.files.internal("cards.png")),1336-((a%10+1)*133),a*193,133,193)));
+                dek[CKartu] = new Kartu(a%10,w,new Sprite(new TextureRegion(new Texture(Gdx.files.internal("cards.png")),800-((a%10+1)*80),w*115,80,115)));
+                CKartu++;
             }
         }
 

@@ -38,7 +38,7 @@ public class Splash extends GameScreen {
 
         time += v;
         if(time >= 5)
-            game.setScreen(new MainMenu(game));
+            game.setScreen(new MainGame(game));
     }
 
     @Override

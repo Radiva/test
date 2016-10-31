@@ -36,7 +36,7 @@ public class Kartu extends Actor{
         angka = angkanya;
         warna = warnanya;
         if(imagenya == null) {
-            gbr = new Sprite(new TextureRegion(new Texture(Gdx.files.internal("cards.png")),0,0,0,0));
+            gbr = new Sprite(new TextureRegion(new Texture(Gdx.files.internal("cards.png")),0,462,80,115));
         } else {
             gbr = imagenya;
         }

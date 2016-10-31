@@ -9,10 +9,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -24,30 +26,36 @@ import java.util.Set;
 /**
  * Created by radiva on 11/10/16.
  */
-public class Gamenya extends GameScreen {
+public class MainGame extends GameScreen {
 
+    Game game;
+    public MainGame(Game game) {
+        super(game);
+        create();
+    }
+
+    TextureRegion splsh;
     Skin skin;
     Stage stage;
     SpriteBatch batch;
     Deck dek;
     Hand tangan,discard;
+    Image[] jajal = new Image[20];
     int last = 0;
-
-    public Gamenya(Game game) {
-        super(game);
-    }
 
     public void create() {
 
         dek = new Deck();
         dek.shuffle();
         tangan = new Hand();
+        discard = new Hand();
         tangan.clear();
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         batch = new SpriteBatch();
         batch.getProjectionMatrix().setToOrtho2D(0, 0, 480, 854);
+        splsh = new TextureRegion(new Texture(Gdx.files.internal("ss.png")));
 
         skin = new Skin();
 
@@ -78,15 +86,21 @@ public class Gamenya extends GameScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 //dek.draw();
                 tangan.tbhKartu(dek.draw());
+                jajal[tangan.jmlHand()-1] = new Image(tangan.getKartu(tangan.jmlHand()-1).getGbr());
+                stage.addActor(jajal[tangan.jmlHand()-1]);
             }
         });
 
         for(int i=0; i<7; i++) {
             tangan.tbhKartu(dek.draw());
+            jajal[i] = new Image(tangan.getKartu(i).getGbr());
+            stage.addActor(jajal[i]);
         }
+        //stage.addActor(tangan.getKartu(0));
 
         discard.tbhKartu(dek.draw());
-        discard.getKartu(last).setPosition(200,425);
+        discard.getKartu(last).getGbr().setPosition(200,425);
+        stage.addActor(new Image(discard.getKartu(last).getGbr()));
 
     }
 
@@ -103,8 +117,8 @@ public class Gamenya extends GameScreen {
         int j = tangan.jmlHand();
         int t = 480/j;
         for (int i = 0; i < tangan.jmlHand(); i++) {
-            tangan.getKartu(i).getGbr().setPosition(100,t*(i+1));
-            final int index = i;
+            jajal[i].setPosition(t*(i+1),100);
+             final int index = i;
             tangan.getKartu(i).addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x,float y) {
@@ -119,8 +133,18 @@ public class Gamenya extends GameScreen {
         }
 
         batch.begin();
-        //batch.draw();
+        //batch.draw(splsh,0,0);
         batch.end();
+
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
+        stage.draw();
+    }
+
+    @Override
+    public void hide () {
+        batch.dispose();
+        stage.dispose();
+        skin.dispose();
     }
 
 }

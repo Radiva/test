@@ -2,7 +2,6 @@ package com.test.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -11,15 +10,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 /**
@@ -36,6 +30,7 @@ public class MainMenu extends GameScreen {
     SpriteBatch batch;
     Skin skin;
     Stage stage;
+    TextButton Btn;
     //float time = 0;
 
     public void create() {
@@ -67,17 +62,18 @@ public class MainMenu extends GameScreen {
 
         skin.add("default", BtnStyle);
 
-        final TextButton Btn = new TextButton("MAIN",BtnStyle);
+        Btn = new TextButton("MAIN",BtnStyle);
         Btn.setPosition(240,240);
         stage.addActor(Btn);
 
-        Btn.addListener(new ChangeListener() {
+        /*Btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //Btn.setText("Bisa");
-                game.setScreen(new Gamenya(game));
+                game.setScreen(new MainGame(game));
             }
-        });
+        });*/
+
     }
 
     @Override
@@ -114,6 +110,10 @@ public class MainMenu extends GameScreen {
         batch.begin();
         batch.draw(menu, 0, 0);
         batch.end();
+
+        float v=0;
+        v+=delta;
+        if(v >= 3) game.setScreen(new MainGame(game));
 
        //Gdx.gl.glClear(0.2f,0.2f,0.2f,1);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
