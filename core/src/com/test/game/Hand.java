@@ -23,6 +23,10 @@ public class Hand {
         hand.add(c);
     }
 
+    public void setKartu(Kartu c) {
+        hand.get(0).setKartu(c.getAngka(), c.getWarna());
+    }
+
     public void keluarKartu(Kartu c) {
         hand.remove(c);
     }

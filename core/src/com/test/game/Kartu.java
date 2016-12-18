@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
  * Created by radiva on 20/10/16.
  */
-public class Kartu extends Actor{
+public class Kartu extends Image {
     public final static int BLUE = 0;
     public final static int RED = 1;
     public final static int YELLOW = 2;
@@ -21,25 +22,29 @@ public class Kartu extends Actor{
     public final static int WILD4 = 8;
 
 
-    private final int warna;
-    private final int angka;
+    private int warna;
+    private int angka;
 
-    Sprite gbr;
-
-    public Kartu() {
-        warna = WILD;
-        angka = 1;
-        gbr = new Sprite(new TextureRegion(new Texture(Gdx.files.internal("cards.png")),0,0,0,0));
+    public Kartu(TextureRegion textureRegion) {
+        super(textureRegion);
     }
 
-    public Kartu(int angkanya, int warnanya, Sprite imagenya) {
+    //Sprite gbr;
+
+//    public Kartu() {
+//        warna = WILD;
+//        angka = 1;
+//        //gbr = new Sprite(new TextureRegion(new Texture(Gdx.files.internal("cards.png")),0,0,0,0));
+//    }
+
+    public void setKartu(int angkanya, int warnanya) {
         angka = angkanya;
         warna = warnanya;
-        if(imagenya == null) {
-            gbr = new Sprite(new TextureRegion(new Texture(Gdx.files.internal("cards.png")),0,462,80,115));
-        } else {
-            gbr = imagenya;
-        }
+//        if(imagenya == null) {
+//            gbr = new Sprite(new TextureRegion(new Texture(Gdx.files.internal("cards.png")),0,462,80,115));
+//        } else {
+//            gbr = imagenya;
+//        }
     }
 
     public int getWarna() {
@@ -50,7 +55,7 @@ public class Kartu extends Actor{
         return angka;
     }
 
-    public Sprite getGbr() {
-        return gbr;
-    }
+//    public Sprite getGbr() {
+//        return gbr;
+//    }
 }

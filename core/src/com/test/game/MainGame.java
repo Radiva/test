@@ -23,6 +23,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import java.util.Random;
 import java.util.Set;
 
+import sun.rmi.runtime.Log;
+
 /**
  * Created by radiva on 11/10/16.
  */
@@ -40,7 +42,7 @@ public class MainGame extends GameScreen {
     SpriteBatch batch;
     Deck dek;
     Hand tangan,discard;
-    Image[] jajal = new Image[20];
+    //Image[] jajal = new Image[20];
     int last = 0;
 
     public void create() {
@@ -55,7 +57,7 @@ public class MainGame extends GameScreen {
         Gdx.input.setInputProcessor(stage);
         batch = new SpriteBatch();
         batch.getProjectionMatrix().setToOrtho2D(0, 0, 480, 854);
-        splsh = new TextureRegion(new Texture(Gdx.files.internal("ss.png")));
+        splsh = new TextureRegion(new Texture(Gdx.files.internal("wood.jpg")));
 
         skin = new Skin();
 
@@ -78,7 +80,7 @@ public class MainGame extends GameScreen {
         skin.add("default", BtnStyle);
 
         final TextButton Btn = new TextButton("DRAW",BtnStyle);
-        Btn.setPosition(240,420);
+        Btn.setPosition(280,420);
         stage.addActor(Btn);
 
         Btn.addListener(new ChangeListener() {
@@ -86,21 +88,52 @@ public class MainGame extends GameScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 //dek.draw();
                 tangan.tbhKartu(dek.draw());
-                jajal[tangan.jmlHand()-1] = new Image(tangan.getKartu(tangan.jmlHand()-1).getGbr());
-                stage.addActor(jajal[tangan.jmlHand()-1]);
+                //jajal[tangan.jmlHand()-1] = new Image(tangan.getKartu(tangan.jmlHand()-1).getGbr());
+                //stage.addActor(jajal[tangan.jmlHand()-1]);
+                //final int index = i;
+                tangan.getKartu(tangan.jmlHand()-1).addListener(new ClickListener(){
+
+                    public void clicked(InputEvent event, float x,float y) {
+                        if(tangan.getKartu(tangan.jmlHand()-1).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(tangan.jmlHand()-1).getWarna() == discard.getKartu(last).getWarna()) {
+                            discard.keluarKartu(last);
+                            discard.tbhKartu(tangan.getKartu(tangan.jmlHand()-1));
+                            //discard.getKartu(last).setPosition(200,425);
+                            tangan.keluarKartu(tangan.jmlHand()-1);
+                            //last++;
+                        }
+                    }
+                });
+                stage.addActor(tangan.getKartu(tangan.jmlHand()-1));
             }
         });
 
         for(int i=0; i<7; i++) {
             tangan.tbhKartu(dek.draw());
-            jajal[i] = new Image(tangan.getKartu(i).getGbr());
-            stage.addActor(jajal[i]);
+            final int index = i;
+            tangan.getKartu(i).addListener(new ClickListener(){
+                //@Override
+                public void clicked(InputEvent event, float x,float y) {
+                    if(tangan.getKartu(index).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(index).getWarna() == discard.getKartu(last).getWarna()) {
+                        discard.keluarKartu(last);
+                        discard.tbhKartu(tangan.getKartu(index));
+                        //last++;
+                        //discard.getKartu(last).setPosition(200,425);
+                        tangan.keluarKartu(index);
+                    }
+                    //tangan.getKartu(index).setPosition(100,600);
+                }
+            });
+            //jajal[i] = new Image(tangan.getKartu(i).getGbr());
+            //stage.addActor(jajal[i]);
+            stage.addActor(tangan.getKartu(i));
         }
         //stage.addActor(tangan.getKartu(0));
 
         discard.tbhKartu(dek.draw());
-        discard.getKartu(last).getGbr().setPosition(200,425);
-        stage.addActor(new Image(discard.getKartu(last).getGbr()));
+        //discard.getKartu(last).setPosition(200,425);
+        stage.addActor(discard.getKartu(last));
+        //discard.getKartu(last).getGbr().setPosition(200,425);
+        //stage.addActor(new Image(discard.getKartu(last).getGbr()));
 
     }
 
@@ -116,24 +149,26 @@ public class MainGame extends GameScreen {
 
         int j = tangan.jmlHand();
         int t = 480/j;
+        discard.getKartu(last).setPosition(200,425);
         for (int i = 0; i < tangan.jmlHand(); i++) {
-            jajal[i].setPosition(t*(i+1),100);
-             final int index = i;
-            tangan.getKartu(i).addListener(new ClickListener(){
-                @Override
-                public void clicked(InputEvent event, float x,float y) {
-                    if(tangan.getKartu(index).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(index).getWarna() == discard.getKartu(last).getWarna()) {
-                        discard.tbhKartu(tangan.getKartu(index));
-                        discard.getKartu(last).setPosition(200,425);
-                        tangan.keluarKartu(index);
-                        last++;
-                    }
-                }
-            });
+            //jajal[i].setPosition(t*(i+1),100);
+            tangan.getKartu(i).setPosition(t*(i+1),100);
+//            final int index = i;
+//            tangan.getKartu(i).addListener(new ClickListener(){
+//                @Override
+//                public void clicked(InputEvent event, float x,float y) {
+//                    if(tangan.getKartu(index).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(index).getWarna() == discard.getKartu(last).getWarna()) {
+//                        discard.tbhKartu(tangan.getKartu(index));
+//                        discard.getKartu(last).setPosition(200,425);
+//                        tangan.keluarKartu(index);
+//                        last++;
+//                    }
+//                }
+//            });
         }
 
         batch.begin();
-        //batch.draw(splsh,0,0);
+        batch.draw(splsh,-10,-10);
         batch.end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));

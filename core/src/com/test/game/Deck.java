@@ -17,7 +17,9 @@ public class Deck {
         int CKartu = 0;
         for(int w = 0; w<4; w++) {
             for(int a=1; a<20; a++) {
-                dek[CKartu] = new Kartu(a%10,w,new Sprite(new TextureRegion(new Texture(Gdx.files.internal("cards.png")),800-((a%10+1)*80),w*115,80,115)));
+                //dek[CKartu] = new Kartu(a%10,w,new Sprite(new TextureRegion(new Texture(Gdx.files.internal("cards.png")),800-((a%10+1)*80),w*115,80,115)));
+                dek[CKartu] = new Kartu(new TextureRegion(new Texture(Gdx.files.internal("cards.png")),800-((a%10+1)*80),w*115,80,115));
+                dek[CKartu].setKartu(a%10,w);
                 CKartu++;
             }
         }
