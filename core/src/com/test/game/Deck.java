@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Deck {
 
-    private Kartu[] dek = new Kartu[76];
+    private Kartu[] dek = new Kartu[76]; //76
     private int KartuKeluar;
 
     public Deck() {

@@ -61,11 +61,11 @@ public class MainGame extends GameScreen {
 
         skin = new Skin();
 
-        Pixmap pixmap = new Pixmap(100,100, Pixmap.Format.RGB888);
-        pixmap.setColor(Color.GREEN);
-        pixmap.fill();
+//        Pixmap pixmap = new Pixmap(100,100, Pixmap.Format.RGB888);
+//        pixmap.setColor(Color.GREEN);
+//        pixmap.fill();
 
-        skin.add("White", new Texture(pixmap));
+        skin.add("White", new Texture(Gdx.files.internal("back.png")));
 
         BitmapFont bfont = new BitmapFont();
         bfont.getData().setScale(1);
@@ -79,8 +79,8 @@ public class MainGame extends GameScreen {
 
         skin.add("default", BtnStyle);
 
-        final TextButton Btn = new TextButton("DRAW",BtnStyle);
-        Btn.setPosition(280,420);
+        final TextButton Btn = new TextButton("",BtnStyle);
+        Btn.setPosition(320,420);
         stage.addActor(Btn);
 
         Btn.addListener(new ChangeListener() {
@@ -95,11 +95,11 @@ public class MainGame extends GameScreen {
 
                     public void clicked(InputEvent event, float x,float y) {
                         if(tangan.getKartu(tangan.jmlHand()-1).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(tangan.jmlHand()-1).getWarna() == discard.getKartu(last).getWarna()) {
-                            discard.keluarKartu(last);
+                            //discard.keluarKartu(last);
                             discard.tbhKartu(tangan.getKartu(tangan.jmlHand()-1));
                             //discard.getKartu(last).setPosition(200,425);
                             tangan.keluarKartu(tangan.jmlHand()-1);
-                            //last++;
+                            last++;
                         }
                     }
                 });
@@ -113,12 +113,15 @@ public class MainGame extends GameScreen {
             tangan.getKartu(i).addListener(new ClickListener(){
                 //@Override
                 public void clicked(InputEvent event, float x,float y) {
+                    System.out.println(index);
+                    System.out.println(discard.getKartu(last).getAngka());
                     if(tangan.getKartu(index).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(index).getWarna() == discard.getKartu(last).getWarna()) {
-                        discard.keluarKartu(last);
+                        //discard.keluarKartu(last);
                         discard.tbhKartu(tangan.getKartu(index));
-                        //last++;
-                        //discard.getKartu(last).setPosition(200,425);
                         tangan.keluarKartu(index);
+                        last++;
+                        discard.getKartu(last).setPosition(200,425);
+                        stage.addActor(discard.getKartu(last));
                     }
                     //tangan.getKartu(index).setPosition(100,600);
                 }
