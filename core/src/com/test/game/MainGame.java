@@ -88,44 +88,48 @@ public class MainGame extends GameScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 //dek.draw();
                 tangan.tbhKartu(dek.draw());
+                test();
                 //jajal[tangan.jmlHand()-1] = new Image(tangan.getKartu(tangan.jmlHand()-1).getGbr());
                 //stage.addActor(jajal[tangan.jmlHand()-1]);
                 //final int index = i;
-                tangan.getKartu(tangan.jmlHand()-1).addListener(new ClickListener(){
-
-                    public void clicked(InputEvent event, float x,float y) {
-                        if(tangan.getKartu(tangan.jmlHand()-1).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(tangan.jmlHand()-1).getWarna() == discard.getKartu(last).getWarna()) {
-                            //discard.keluarKartu(last);
-                            discard.tbhKartu(tangan.getKartu(tangan.jmlHand()-1));
-                            //discard.getKartu(last).setPosition(200,425);
-                            tangan.keluarKartu(tangan.jmlHand()-1);
-                            last++;
-                        }
-                    }
-                });
+//                tangan.getKartu(tangan.jmlHand()-1).addListener(new ClickListener(){
+//
+//                    public void clicked(InputEvent event, float x,float y) {
+//                        if(tangan.getKartu(tangan.jmlHand()-1).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(tangan.jmlHand()-1).getWarna() == discard.getKartu(last).getWarna()) {
+//                            //discard.keluarKartu(last);
+//                            discard.tbhKartu(tangan.getKartu(tangan.jmlHand()-1));
+//                            //discard.getKartu(last).setPosition(200,425);
+//                            tangan.keluarKartu(tangan.jmlHand()-1);
+//                            last++;
+//                            discard.getKartu(last).setPosition(200,425);
+//                            stage.addActor(discard.getKartu(last));
+//                        }
+//                    }
+//                });
                 stage.addActor(tangan.getKartu(tangan.jmlHand()-1));
             }
         });
 
         for(int i=0; i<7; i++) {
             tangan.tbhKartu(dek.draw());
-            final int index = i;
-            tangan.getKartu(i).addListener(new ClickListener(){
-                //@Override
-                public void clicked(InputEvent event, float x,float y) {
-                    System.out.println(index);
-                    System.out.println(discard.getKartu(last).getAngka());
-                    if(tangan.getKartu(index).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(index).getWarna() == discard.getKartu(last).getWarna()) {
-                        //discard.keluarKartu(last);
-                        discard.tbhKartu(tangan.getKartu(index));
-                        tangan.keluarKartu(index);
-                        last++;
-                        discard.getKartu(last).setPosition(200,425);
-                        stage.addActor(discard.getKartu(last));
-                    }
-                    //tangan.getKartu(index).setPosition(100,600);
-                }
-            });
+//            final int index = i;
+//            tangan.getKartu(i).addListener(new ClickListener(){
+//                //@Override
+//                public void clicked(InputEvent event, float x,float y) {
+//                    System.out.println(index);
+//                    System.out.println(discard.getKartu(last).getAngka());
+//                    if(tangan.getKartu(index).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(index).getWarna() == discard.getKartu(last).getWarna()) {
+//                        //discard.keluarKartu(last);
+//                        discard.tbhKartu(tangan.getKartu(index));
+//                        tangan.keluarKartu(index);
+//                        last++;
+//                        discard.getKartu(last).setPosition(200,425);
+//                        stage.addActor(discard.getKartu(last));
+//                        //test();
+//                    }
+//                    //tangan.getKartu(index).setPosition(100,600);
+//                }
+//            });
             //jajal[i] = new Image(tangan.getKartu(i).getGbr());
             //stage.addActor(jajal[i]);
             stage.addActor(tangan.getKartu(i));
@@ -133,6 +137,8 @@ public class MainGame extends GameScreen {
         //stage.addActor(tangan.getKartu(0));
 
         discard.tbhKartu(dek.draw());
+        test();
+        System.out.println("Test Done");
         //discard.getKartu(last).setPosition(200,425);
         stage.addActor(discard.getKartu(last));
         //discard.getKartu(last).getGbr().setPosition(200,425);
@@ -157,14 +163,16 @@ public class MainGame extends GameScreen {
             //jajal[i].setPosition(t*(i+1),100);
             tangan.getKartu(i).setPosition(t*(i+1),100);
 //            final int index = i;
+//            tangan.getKartu(i).removeListener(new ClickListener());
 //            tangan.getKartu(i).addListener(new ClickListener(){
 //                @Override
 //                public void clicked(InputEvent event, float x,float y) {
 //                    if(tangan.getKartu(index).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(index).getWarna() == discard.getKartu(last).getWarna()) {
 //                        discard.tbhKartu(tangan.getKartu(index));
-//                        discard.getKartu(last).setPosition(200,425);
 //                        tangan.keluarKartu(index);
 //                        last++;
+//                        discard.getKartu(last).setPosition(200,425);
+//                        stage.addActor(discard.getKartu(last));
 //                    }
 //                }
 //            });
@@ -183,6 +191,29 @@ public class MainGame extends GameScreen {
         batch.dispose();
         stage.dispose();
         skin.dispose();
+    }
+
+    void test() {
+        for (int i = 0; i < tangan.jmlHand(); i++) {
+            final int index = i;
+            System.out.println(index);
+            tangan.getKartu(i).clearListeners();
+            tangan.getKartu(i).addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x,float y) {
+                    System.out.println(index);
+                    System.out.println(discard.getKartu(last).getAngka());
+                    if(tangan.getKartu(index).getAngka() == discard.getKartu(last).getAngka() || tangan.getKartu(index).getWarna() == discard.getKartu(last).getWarna()) {
+                        discard.tbhKartu(tangan.getKartu(index));
+                        tangan.keluarKartu(index);
+                        last++;
+                        discard.getKartu(last).setPosition(200,425);
+                        stage.addActor(discard.getKartu(last));
+                        test();
+                    }
+                }
+            }); System.out.println(i + "done");
+        }
     }
 
 }
